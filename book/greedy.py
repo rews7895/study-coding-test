@@ -1,17 +1,19 @@
 class Greedy:
     def __init__(self):
+        self.count = 4
         pass
         # print('문제번호 입력')
         # part = int(input())
         # self._part = part
 
-    def ex1(self, exchange):
+    def ex1(self):
         """
         거스름돈
         500, 100, 50, 10원짜리 동전 무수히 많음
         손님에게 거슬러줘야할 돈 N원일 때,
         거슬러줘야할 동전의 최소 개수
         """
+        exchange = int(input())
         exchange_coin = [500, 100, 50, 10]
         cnt = 0
         coin_r = exchange
@@ -78,19 +80,34 @@ class Greedy:
         print(result)
 
 
-
-
-
-
-
-
     def ex4(self):
         """
         1이 될 때 까지
+        어떤 수 N이 1이 될 때까지 반복 수행
+        N에서 1을 빼고 N을 K로 나눔
         """
-        pass
+        cnt = 0
+        n, k = map(int, input().split())
+        while n != 1:
+            if k % 2 == 0: # 짝수일 때
+                if n % 2 != 0:
+                    n -= 1
+                    cnt += 1
+                else:
+                    n = int(n / k)
+                    cnt += 1
+            else: # 홀수일 때
+                if n % 2 != 0:
+                    n = int(n / k)
+                    cnt += 1
+                else:
+                    n -= 1
+                    cnt += 1
+        print(cnt)
+
 
 if __name__ == '__main__':
     # Greedy.ex1('',34230)
     # Greedy.ex2('', )
-    Greedy.ex3('')
+    # Greedy.ex3('')
+    Greedy.ex4('')
