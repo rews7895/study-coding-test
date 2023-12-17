@@ -50,8 +50,39 @@ class Greedy:
     def ex3(self):
         """
         숫자 카드 게임
+        여러개의 숫자 카드 중에서 가장 높은 숫자가 쓰인 카드 한 장
+        n은 행의 개수 m은 열의 개수. 뽑고자 하는 카드 포함
+        행에 포함된 카드 중 가장 낮은 카드 뽑기
+        3 3
+        3 1 2
+        4 1 4
+        2 2 2
+
+        2 4
+        7 3 1 8
+        3 3 3 4
         """
-        pass
+        n, m = input().split()
+        n, m = int(n), int(m)
+        arr = []
+        for a in range(n):
+            arr_ = list(map(int, input().split()))
+            arr.append(arr_)
+        result = 0
+        for (idx, i) in enumerate(arr):
+            if m-1 > idx:
+                result = min(i)
+            else:
+                if result < min(i):
+                    result = min(i)
+        print(result)
+
+
+
+
+
+
+
 
     def ex4(self):
         """
@@ -59,6 +90,7 @@ class Greedy:
         """
         pass
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     # Greedy.ex1('',34230)
     # Greedy.ex2('', )
+    Greedy.ex3('')
