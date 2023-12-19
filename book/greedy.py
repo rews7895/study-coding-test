@@ -1,3 +1,4 @@
+import time
 class Greedy:
     def __init__(self):
         self.count = 4
@@ -66,12 +67,12 @@ class Greedy:
         """
         n, m = input().split()
         n, m = int(n), int(m)
-        arr = []
+        li = []
         for a in range(n):
-            arr_ = list(map(int, input().split()))
-            arr.append(arr_)
+            li_ = list(map(int, input().split()))
+            li.append(li_)
         result = 0
-        for (idx, i) in enumerate(arr):
+        for (idx, i) in enumerate(li):
             if m-1 > idx:
                 result = min(i)
             else:
@@ -86,10 +87,12 @@ class Greedy:
         어떤 수 N이 1이 될 때까지 반복 수행
         N에서 1을 빼고 N을 K로 나눔
         """
+
         cnt = 0
         n, k = map(int, input().split())
+        start_time = time.time()
         while n != 1:
-            if k % 2 == 0: # 짝수일 때
+            if k % 2 == 0:  # 짝수일 때
                 if n % 2 != 0:
                     n -= 1
                     cnt += 1
@@ -104,10 +107,13 @@ class Greedy:
                     n -= 1
                     cnt += 1
         print(cnt)
-
+        end_time = time.time()
+        print(f"실행시간 : {round(end_time - start_time, 4)}")
 
 if __name__ == '__main__':
+    pass
     # Greedy.ex1('',34230)
     # Greedy.ex2('', )
     # Greedy.ex3('')
-    Greedy.ex4('')
+    # Greedy.ex4('')
+    # test()
