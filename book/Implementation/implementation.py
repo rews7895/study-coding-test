@@ -1,5 +1,5 @@
 import string
-
+from itertools import combinations
 class Implementation:
     def __init__(self):
         pass
@@ -42,11 +42,15 @@ class Implementation:
         cnt = 0  # n이 포함되면 올릴 값
 
         # m과 s는 0부터 59사이 n이 포함될 값이 동일할 것 이므로 cnt 값 구한 후 *2
+        # ============테스트시작=============#
+        test_cnt = 0
         while s_test <= 59:
             s_test += 1
+            print(s_test)
             # str 으로 변경 후 3 포함 된다면 cnt 값 올리기
             if '3' in str(s_test):
-                cnt += 1
+                test_cnt += 1
+        print(test_cnt)
         # 0시 0분 59초까지 cnt개
         # 0시 59분 59초까지 cnt * cnt
         # 시 경우의 수
@@ -57,13 +61,14 @@ class Implementation:
         # 3시 => 2시 59분 59초 cnt * cnt
         # 2시 => 1시 59분 59초 cnt * cnt
         # 1시 => 59분 59초 cnt * cnt
+        # ============테스트종료=============#
 
-        # for h_ in range(h+1):
-        #     for m_ in range(m):
-        #         for s_ in range(s):
-        #             if '3' in str(s_) + str(m_) + str(h_):
-        #                 cnt += 1
-        # print(cnt)
+        for h_ in range(h+1):
+            for m_ in range(m):
+                for s_ in range(s):
+                    if '3' in str(s_) + str(m_) + str(h_):
+                        cnt += 1
+        print(cnt)
 
     def ex2(self):
         """
@@ -74,12 +79,13 @@ class Implementation:
         2. 수직으로 두 칸 이동 뒤 수평으로 한 칸 이동
         """
         # focus = input()
-        focus = 'a1'
+        focus = 'h8'
         size = 8
         focus_f = focus[0]
         focus_b = focus[1]
         # 열 소문자 리스트 a ~ h
         alph_li = [i for i in string.ascii_lowercase][:size]
+
         # 행 숫자 리스트 1 ~ 8
         focus_f_li = [str(i) for i in range(1, size+1)]
         cnt = 0
@@ -88,21 +94,69 @@ class Implementation:
         # 왼쪽으로 두 칸 이동, 아래로 한칸 이동
         # 위로 두 칸 이동, 오른쪽으로 한칸 이동...
         move_li = [[2, 1], [1, 2], [-2, 1], [1, -2], [-2, -1], [-1, 2], [-1, -2], [2, -1]]
+
         for i in move_li:
             # a 를 열 소문자 리스트에서 찾아서 인덱스 값 + i[0] 이동
             move_f = alph_li.index(focus_f) + i[0]
             # 1 을 행 숫자 리스트에서 찾아서 인덱스 값 + i[1] 이동
             move_b = focus_f_li.index(focus_b) + i[1]
+            print(move_f, move_b)
             # 음수가 아닐 때 이동 성공 cnt + 1
-            if move_f > 0 and move_b > 0:
+            if 0 < move_f < 8 and 0 < move_b < 8:
                 cnt += 1
-        print(cnt)
 
+        print(cnt)
     def ex3(self):
+        """
+        1 현재 위치에서 현재 방향 기준 => 왼쪽 방향 (반시계 방향으로 90도 회전한 방향)부터 차례대로 - 패턴 O, 육지를 한번 카운트 하면
+        0은 북쪽 -> 3 서쪽으로 회전
+        2 캐릭터 바로 왼쪽
+        - 아직 가보지 않은 칸이 없다면 왼쪽방향으로 회전 2 남쪽 => 왼쪽 한칸 전진
+        - 왼쪽방향에 가보지 않은 칸 없다면 왼쪽방향으로 회전 1 동쪽 => 1단계로
+        3 네 방향 모두 이미 가본 칸 or 바다 이면
+        - 바라본 방향 유지 -> 한칸 뒤로 -> 1다계로
+        뒤쪽 방향 바다인 칸이면 뒤로 갈 수 없어 멈춤
+        시작점도 횟수에 포함
+        """
         n, m = 4, 4
-        x, y, c = 1, 1, 0
-        m = input().split()
-        print(m)
+        x, y, c = 1, 1, 0  # 내 위치 북쪽
+        li = [[1, 1, 1, 1], [1, 0, 0, 1], [1, 1, 0, 1], [1, 1, 1, 1]]
+        # 왼쪽으로 회전 0, -1, -2, -3
+        lotate_li = [0, 1, 2, 3]
+        location = li[x][y]
+        count = 0
+        lotate = c
+
+        if location == 0:
+            # 첫 위치에서 0인지 확인. 0이라면 갈 수 있는 곳
+            count += 1
+            # 가봤다를 찍기 위해 해당 위치 0을 1로
+            li[x][y] = 1
+            lotate = lotate_li[lotate - 1]
+            # 서쪽에서 왼쪽이면 [1][3]
+            location = li[x][lotate]
+            print(f"x: {x} lotate:{lotate}")
+            # 왼쪽 방향에 아직 가보지 않은 칸이 존재한다면 => 0임
+            print(f"location:{location}")
+
+            if location == 1 :
+                location = li[x][lotate - 1]
+                print(f"x: {x} lotate:{lotate-1}")
+                print(f"location:{location}")
+                if location == 0:
+                    count += 1
+                    # 가봤다를 찍기 위해 해당 위치 0을 1로
+                    li[x][lotate - 1] = 1
+                    location = li[x][lotate - 1]
+            # 왼쪽 방향에 가본 칸이 있음
+            elif location == 1:
+                location = li[x][lotate - 2]
+                print(location)
+        print(count)
+
+
+
+
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 # 시간 측정
-from book.greedy import Greedy
+from book.Greedy.greedy import Greedy
 
 g = Greedy()
 ex_count = g.count
