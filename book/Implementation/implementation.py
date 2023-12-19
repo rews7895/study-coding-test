@@ -127,11 +127,13 @@ class Implementation:
         count = 0
         lotate = c
 
+        # 가봤다를 찍기 위해 해당 위치 0을 1로
+        li[x][y] = 1
+
         if location == 0:
             # 첫 위치에서 0인지 확인. 0이라면 갈 수 있는 곳
             count += 1
-            # 가봤다를 찍기 위해 해당 위치 0을 1로
-            li[x][y] = 1
+
             lotate = lotate_li[lotate - 1]
             # 서쪽에서 왼쪽이면 [1][3]
             location = li[x][lotate]
