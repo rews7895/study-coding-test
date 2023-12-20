@@ -1,8 +1,11 @@
 import string
 from itertools import combinations
+
+
 class Implementation:
     def __init__(self):
         pass
+
     def ex1(self):
         """
         상하좌우
@@ -63,7 +66,7 @@ class Implementation:
         # 1시 => 59분 59초 cnt * cnt
         # ============테스트종료=============#
 
-        for h_ in range(h+1):
+        for h_ in range(h + 1):
             for m_ in range(m):
                 for s_ in range(s):
                     if '3' in str(s_) + str(m_) + str(h_):
@@ -87,7 +90,7 @@ class Implementation:
         alph_li = [i for i in string.ascii_lowercase][:size]
 
         # 행 숫자 리스트 1 ~ 8
-        focus_f_li = [str(i) for i in range(1, size+1)]
+        focus_f_li = [str(i) for i in range(1, size + 1)]
         cnt = 0
         # 오른쪽으로 두 칸 이동, 아래로 한칸 이동
         # 아래로 두 칸 이동, 오른쪽으로 한칸 이동
@@ -106,6 +109,7 @@ class Implementation:
                 cnt += 1
 
         print(cnt)
+
     def ex3(self):
         """
         1 현재 위치에서 현재 방향 기준 => 왼쪽 방향 (반시계 방향으로 90도 회전한 방향)부터 차례대로 - 패턴 O, 육지를 한번 카운트 하면
@@ -119,45 +123,73 @@ class Implementation:
         시작점도 횟수에 포함
         """
         n, m = 4, 4
-        x, y, c = 1, 1, 0  # 내 위치 북쪽
-        li = [[1, 1, 1, 1], [1, 0, 0, 1], [1, 1, 0, 1], [1, 1, 1, 1]]
-        # 왼쪽으로 회전 0, -1, -2, -3
-        lotate_li = [0, 1, 2, 3]
-        location = li[x][y]
-        count = 0
-        lotate = c
+        # 내 위치 북쪽
+        x, y, lotate = 1, 1, 0
+        li = [
+            [1, 1, 1, 1],
+            [1, 0, 0, 1],
+            [1, 1, 0, 1],
+            [1, 1, 1, 1]
+        ]
+        c = [0, 1, 2, 3]
+        # if direction == 0:
+        #     exist += 1
+        #     lotate = c[lotate - 1]
+        #     pass
+        # else:
+        #     pass
+        position = [x, y]
+        count = 1
+        limit = 0
+        while True:
+            # print(x, y)
+            # print(lotate)
+            if lotate == 0:
+                # 북쪽  y -= 1
+                if li[x][y - 1] == 0:
+                    y -= 1
 
-        # 가봤다를 찍기 위해 해당 위치 0을 1로
-        li[x][y] = 1
-
-        if location == 0:
-            # 첫 위치에서 0인지 확인. 0이라면 갈 수 있는 곳
-            count += 1
-
-            lotate = lotate_li[lotate - 1]
-            # 서쪽에서 왼쪽이면 [1][3]
-            location = li[x][lotate]
-            print(f"x: {x} lotate:{lotate}")
-            # 왼쪽 방향에 아직 가보지 않은 칸이 존재한다면 => 0임
-            print(f"location:{location}")
-
-            if location == 1 :
-                location = li[x][lotate - 1]
-                print(f"x: {x} lotate:{lotate-1}")
-                print(f"location:{location}")
-                if location == 0:
+                    li[x][y] = 1
+                    limit = 0
                     count += 1
-                    # 가봤다를 찍기 위해 해당 위치 0을 1로
-                    li[x][lotate - 1] = 1
-                    location = li[x][lotate - 1]
-            # 왼쪽 방향에 가본 칸이 있음
-            elif location == 1:
-                location = li[x][lotate - 2]
-                print(location)
-        print(count)
-
-
-
+                    # print(x, y, 0)
+                else:
+                    limit += 1
+            elif lotate == 1:
+                # 동쪽 x -= 1
+                if li[x - 1][y] == 0:
+                    x -= 1
+                    li[x][y] = 1
+                    limit = 0
+                    count += 1
+                else:
+                    limit += 1
+            elif lotate == 2:
+                print(x, y + 1, li[x][y + 1], 2)
+                # 남쪽
+                if li[x][y + 1] == 0:
+                    y += 1
+                    li[x][y] = 1
+                    limit = 0
+                    count += 1
+                else:
+                    limit += 1
+            elif lotate == 3:
+                # print(li[x + 1][y], 3)
+                if li[x + 1][y] == 0:
+                    x += 1
+                    li[x][y] = 1
+                    limit = 0
+                    count += 1
+                else:
+                    limit += 1
+                # 서쪽 x += 1
+            lotate = c[lotate - 1]
+            # 4방향을 체크
+            if limit >= 4:
+                print(x, y)
+                # print(count)
+                break
 
 
 
@@ -165,3 +197,7 @@ if __name__ == '__main__':
     # Implementation.ex1_2('')
     # Implementation.ex2('')
     Implementation.ex3('')
+
+
+
+
