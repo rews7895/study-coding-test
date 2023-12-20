@@ -1,4 +1,5 @@
-class Dfs_Bsa:
+from collections import deque
+class DfsBfsConcept:
     def __init__():
         pass
 
@@ -102,7 +103,7 @@ class Dfs_Bsa:
         # 현재 노드와 연결된 다른 노드를 재귀적으로 방문
         for i in graph[v]:
             if not visited[i]:
-                Dfs_Bsa.dfs(graph, i, visited)
+                DfsBfsConcept.dfs(graph, i, visited)
     def dfs_exec(self):
         # 각 노드가 연결된 정보를 리스트 자료형으로 표현 (2차원 리스트)
         graph = [
@@ -119,14 +120,84 @@ class Dfs_Bsa:
         # 각 노드가 방문된 정보를 리스트 자료형으로 표현 (1차원 리스트)
         visited = [False] * 9
         # 정의된 DFS 함수 호출
-        Dfs_Bsa.dfs(graph, 1, visited)
+        DfsBfsConcept.dfs(graph, 1, visited)
+
+    def bfs_stack(self):
+        """
+        '너비 우선 탐색' : 가까운 노드부터 탐색하는 알고리즘
+        선입선출 방식인 큐 자료구조를 이용하기
+        인접한 노드를 반복적으로 큐에 넣어 알고리즘 작성
+        1. 탐색 시작 노드를 큐에 삽입하고 방문 처리
+        2. 큐에서 노드 꺼내 해당 노드의 인접 노드 중에서 방문하지 않은 노드를 모두 큐에 삽입하고 방문 처리
+        """
+        queue = deque()
+        # 1 시작 노드 1 삽입,
+        queue.append(1)
+        # 1 꺼내고 인접 노드 2, 3, 8
+        queue.remove(queue[0])
+        # 방문하지 않은 인접 노드 2, 3, 8 모두 삽입
+        queue.append(2)
+        queue.append(3)
+        queue.append(8)
+        print(queue)
+        # 먼저들어간 2 꺼내고 방문하지않은 인접노드 7 삽입
+        queue.remove(queue[0])
+        queue.append(7)
+        print(queue)
+        # 3 꺼내고 방문하지 않은 인접노드 4, 5 삽입
+        queue.remove(queue[0])
+        queue.append(4)
+        queue.append(5)
+        print(queue)
+        # 8꺼내고 인접노드 없어 무시
+        queue.remove(queue[0])
+        print(queue)
+        # 7꺼내고 인접노드 6 삽입
+        queue.remove(queue[0])
+        queue.append(6)
+        print(queue)
+
+    # BFS 메서드 정의
+    def bfs(graph, start, visited):
+        # Queue 구현을 위해 deque 라이브러리 사용
+        queue = deque([start])
+        # 현재 노드를 방문 처리
+        visited[start] = True
+        # 큐가 빌 때까지 반복
+        while queue:
+            # 큐에서 하나의 원소를 뽑아 출력
+            v = queue.popleft()
+            print(v, end=' ')
+            # 해당 원소와 연결된, 아직 방문하지 않은 원소들을 큐에 삽입
+            for i in graph[v]:
+                if not visited[i]:
+                    queue.append(i)
+                    visited[i] = True
+    def bfs_exec(self):
+        # 각 노드가 연결된 정보를 리스트 자료형으로 표현 (2차원 리스트)
+        # 각 노드가 연결된 정보를 리스트 자료형으로 표현 (2차원 리스트)
+        graph = [
+            [],
+            [2, 3, 8],
+            [1, 7],
+            [1, 4, 5],
+            [3, 5],
+            [3, 4],
+            [7],
+            [2, 6, 8],
+            [1, 7]
+        ]
+        # 각 노드가 방문된 정보를 리스트 자료형으로 표현 (1차원 리스트)
+        visited = [False] * 9
+        # 정의된 DFS 함수 호출
+        DfsBfsConcept.bfs(graph, 1, visited)
 
 
 if __name__ == '__main__':
-    # Dfs_Bsa.adjacencyMatrix('')
-    # adjacency_list = Dfs_Bsa.adjacencyList('')
+    # DfsBfsConcept.adjacencyMatrix('')
+    # adjacency_list = DfsBfsConcept.adjacencyList('')
     # print(adjacency_list)
-    # Dfs_Bsa.dfs_stack()
-    Dfs_Bsa.dfs_exec('')
-
+    # DfsBfsConcept.dfs_stack()
+    # DfsBfsConcept.dfs_exec('')
+    DfsBfsConcept.bfs_stack('')
 

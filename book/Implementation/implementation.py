@@ -132,12 +132,6 @@ class Implementation:
             [1, 1, 1, 1]
         ]
         c = [0, 1, 2, 3]
-        # if direction == 0:
-        #     exist += 1
-        #     lotate = c[lotate - 1]
-        #     pass
-        # else:
-        #     pass
         position = [x, y]
         count = 1
         limit = 0
