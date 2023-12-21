@@ -2,7 +2,7 @@
 from book.Greedy.greedy import Greedy
 
 g = Greedy()
-ex_count = g.count
+ex_count = g.count 
 
 print("문제1 :", g.ex1.__doc__)
 print(g.ex1())
